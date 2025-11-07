@@ -1,38 +1,36 @@
 // react global
-import React from 'react';
+import React, { useState } from 'react';
 
 // components
 import SignIn from '../components/Login/SignIn';
 
-import makeStyles from '@mui/styles/makeStyles';
 import { Grid } from '@mui/material';
 import SigninPresentation from 'components/Login/SignInPresentation';
-import { useState } from 'react';
 import Loading from 'components/Shared/Loading';
-
-const useStyles = makeStyles(() => ({
-  container: {
-    minHeight: '100vh',
-    backgroundColor: '#F6F7F9'
-  },
-  signinContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  loadingHidden: {
-    display: 'none'
-  }
-}));
 
 function LoginPage({ isLoggedIn, setIsLoggedIn }) {
   const [isLoading, setIsLoading] = useState(true);
-  const classes = useStyles();
 
   return (
-    <Grid container spacing={0} className={classes.container} data-testid="login-container">
+    <Grid
+      container
+      spacing={0}
+      sx={{
+        minHeight: '100vh',
+        backgroundColor: '#F6F7F9'
+      }}
+      data-testid="login-container"
+    >
       {isLoading && <Loading />}
-      <Grid item xs={1} md={6} className={`${isLoading ? classes.loadingHidden : ''} hide-on-small`}>
+      <Grid
+        item
+        xs={1}
+        md={6}
+        className="hide-on-small"
+        sx={{
+          display: isLoading ? 'none' : undefined
+        }}
+      >
         <SigninPresentation />
       </Grid>
       <Grid
@@ -40,7 +38,11 @@ function LoginPage({ isLoggedIn, setIsLoggedIn }) {
         xs={12}
         sm={12}
         md={6}
-        className={`${classes.signinContainer} ${isLoading ? classes.loadingHidden : ''}`}
+        sx={{
+          display: isLoading ? 'none' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
       >
         <SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} wrapperSetLoading={setIsLoading} />
       </Grid>

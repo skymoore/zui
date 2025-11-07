@@ -16,7 +16,6 @@ import {
   Snackbar,
   CircularProgress
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { host } from '../../../host';
 import { debounce, isEmpty } from 'lodash';
 import Loading from '../../Shared/Loading';
@@ -36,115 +35,7 @@ import Collapse from '@mui/material/Collapse';
 import VulnerabilitiyCard from '../../Shared/VulnerabilityCard';
 import VulnerabilityCountCard from '../../Shared/VulnerabilityCountCard';
 
-const useStyles = makeStyles((theme) => ({
-  searchAndDisplayBar: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  title: {
-    color: theme.palette.primary.main,
-    fontSize: '1.5rem',
-    fontWeight: '600',
-    marginBottom: '0'
-  },
-  cveCountSummary: {
-    color: theme.palette.primary.main,
-    fontSize: '1.5rem',
-    fontWeight: '600',
-    marginBottom: '0'
-  },
-  cveId: {
-    color: theme.palette.primary.main,
-    fontSize: '1rem',
-    fontWeight: 400,
-    textDecoration: 'underline'
-  },
-  cveSummary: {
-    color: theme.palette.secondary.dark,
-    fontSize: '0.75rem',
-    fontWeight: '600',
-    textOverflow: 'ellipsis',
-    marginTop: '0.5rem'
-  },
-  none: {
-    color: '#52637A',
-    fontSize: '1.4rem',
-    fontWeight: '600'
-  },
-  vulnerabilities: {
-    position: 'relative',
-    maxWidth: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  search: {
-    position: 'relative',
-    maxWidth: '100%',
-    flex: 0.95,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    boxShadow: 'none',
-    border: '0.063rem solid #E7E7E7',
-    borderRadius: '0.625rem'
-  },
-  expandableSearchInput: {
-    flexGrow: 0.95
-  },
-  view: {
-    alignContent: 'right',
-    variant: 'outlined'
-  },
-  viewModes: {
-    position: 'relative',
-    alignItems: 'baseline',
-    maxWidth: '100%',
-    flexDirection: 'row',
-    justifyContent: 'right'
-  },
-  searchIcon: {
-    color: '#52637A',
-    paddingRight: '3%'
-  },
-  searchInputBase: {
-    width: '90%',
-    paddingLeft: '1.5rem',
-    height: 40,
-    color: 'rgba(0, 0, 0, 0.6)'
-  },
-  input: {
-    color: '#464141',
-    '&::placeholder': {
-      opacity: '1'
-    }
-  },
-  popper: {
-    width: '100%',
-    overflow: 'hidden',
-    padding: '0.3rem',
-    display: 'flex',
-    justifyContent: 'left'
-  },
-  dropdownArrowBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  dropdownText: {
-    color: '#1479FF',
-    fontSize: '1.5rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    textAlign: 'center'
-  },
-  test: {
-    width: '95%'
-  }
-}));
-
 function VulnerabilitiesDetails(props) {
-  const classes = useStyles();
   const [cveData, setCveData] = useState([]);
   const [allCveData, setAllCveData] = useState([]);
   const [cveSummary, setCVESummary] = useState({});
@@ -345,7 +236,20 @@ function VulnerabilitiesDetails(props) {
         return <VulnerabilitiyCard key={index} cve={cve} name={name} platform={platform} expand={selectedViewMore} />;
       })
     ) : (
-      <div>{!isLoading && <Typography className={classes.none}> No Vulnerabilities </Typography>}</div>
+      <div>
+        {!isLoading && (
+          <Typography
+            sx={{
+              color: '#52637A',
+              fontSize: '1.4rem',
+              fontWeight: '600'
+            }}
+          >
+            {' '}
+            No Vulnerabilities{' '}
+          </Typography>
+        )}
+      </div>
     );
   };
 
@@ -381,11 +285,40 @@ function VulnerabilitiesDetails(props) {
 
   return (
     <Stack direction="column" spacing="1rem" data-testid="vulnerability-container">
-      <Stack className={classes.vulnerabilities}>
-        <Typography variant="h4" gutterBottom component="div" align="left" className={classes.title}>
+      <Stack
+        sx={{
+          position: 'relative',
+          maxWidth: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <Typography
+          variant="h4"
+          gutterBottom
+          component="div"
+          align="left"
+          sx={(theme) => ({
+            color: theme.palette.primary.main,
+            fontSize: '1.5rem',
+            fontWeight: '600',
+            marginBottom: '0'
+          })}
+        >
           Vulnerabilities
         </Typography>
-        <Stack direction="row" spacing="1rem" className={classes.viewModes}>
+        <Stack
+          direction="row"
+          spacing="1rem"
+          sx={{
+            position: 'relative',
+            alignItems: 'baseline',
+            maxWidth: '100%',
+            flexDirection: 'row',
+            justifyContent: 'right'
+          }}
+        >
           <IconButton disableRipple onClick={handleClickExport}>
             <DownloadIcon />
           </IconButton>
@@ -398,9 +331,12 @@ function VulnerabilitiesDetails(props) {
             value="viewLess"
             title="Collapse list view"
             size="small"
-            className={classes.view}
             selected={!selectedViewMore}
             onChange={() => setSelectedViewMore(false)}
+            sx={{
+              alignContent: 'right',
+              variant: 'outlined'
+            }}
           >
             <ViewHeadlineIcon />
           </ToggleButton>
@@ -408,10 +344,13 @@ function VulnerabilitiesDetails(props) {
             value="viewMore"
             title="Expand list view"
             size="small"
-            className={classes.view}
             selected={selectedViewMore}
             onChange={() => setSelectedViewMore(true)}
             data-testid="expand-list-view-toggle"
+            sx={{
+              alignContent: 'right',
+              variant: 'outlined'
+            }}
           >
             <ViewAgendaIcon />
           </ToggleButton>
@@ -434,8 +373,14 @@ function VulnerabilitiesDetails(props) {
             onClick={handleOnExportCSV}
             disableRipple
             disabled={isLoadingAllCve}
-            className={classes.popper}
             data-testid="export-csv-menuItem"
+            sx={{
+              width: '100%',
+              overflow: 'hidden',
+              padding: '0.3rem',
+              display: 'flex',
+              justifyContent: 'left'
+            }}
           >
             csv
           </MenuItem>
@@ -444,8 +389,14 @@ function VulnerabilitiesDetails(props) {
             onClick={handleOnExportExcel}
             disableRipple
             disabled={isLoadingAllCve}
-            className={classes.popper}
             data-testid="export-excel-menuItem"
+            sx={{
+              width: '100%',
+              overflow: 'hidden',
+              padding: '0.3rem',
+              display: 'flex',
+              justifyContent: 'left'
+            }}
           >
             xlsx
           </MenuItem>
@@ -453,31 +404,105 @@ function VulnerabilitiesDetails(props) {
       </Stack>
       {renderCVESummary()}
       <Stack direction="row">
-        <div className={classes.dropdownArrowBox} onClick={handleExpandCVESearch}>
+        <div
+          onClick={handleExpandCVESearch}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
           {!openExcludeSearch ? (
-            <KeyboardArrowRight className={classes.dropdownText} />
+            <KeyboardArrowRight
+              sx={{
+                color: '#1479FF',
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                textAlign: 'center'
+              }}
+            />
           ) : (
-            <KeyboardArrowDown className={classes.dropdownText} />
+            <KeyboardArrowDown
+              sx={{
+                color: '#1479FF',
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                textAlign: 'center'
+              }}
+            />
           )}
         </div>
-        <Stack className={classes.test} direction="column" spacing="0.25em">
-          <Stack className={classes.search}>
+        <Stack sx={{ width: '95%' }} direction="column" spacing="0.25em">
+          <Stack
+            sx={{
+              position: 'relative',
+              maxWidth: '100%',
+              flex: 0.95,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              boxShadow: 'none',
+              border: '0.063rem solid #E7E7E7',
+              borderRadius: '0.625rem'
+            }}
+          >
             <InputBase
               placeholder={'Search'}
-              classes={{ root: classes.searchInputBase, input: classes.input }}
               onChange={debouncedChangeHandler}
+              sx={{
+                width: '90%',
+                paddingLeft: '1.5rem',
+                height: 40,
+                color: 'rgba(0, 0, 0, 0.6)',
+                '& .MuiInputBase-input': {
+                  color: '#464141',
+                  '&::placeholder': {
+                    opacity: '1'
+                  }
+                }
+              }}
             />
-            <div className={classes.searchIcon}>
+            <div
+              style={{
+                color: '#52637A',
+                paddingRight: '3%'
+              }}
+            >
               <SearchIcon />
             </div>
           </Stack>
 
           <Collapse in={openExcludeSearch} timeout="auto" unmountOnExit>
-            <Stack className={classes.search}>
+            <Stack
+              sx={{
+                position: 'relative',
+                maxWidth: '100%',
+                flex: 0.95,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                boxShadow: 'none',
+                border: '0.063rem solid #E7E7E7',
+                borderRadius: '0.625rem'
+              }}
+            >
               <InputBase
                 placeholder={'Exclude'}
-                classes={{ root: classes.searchInputBase, input: classes.input }}
                 onChange={debouncedExcludeFilterChangeHandler}
+                sx={{
+                  width: '90%',
+                  paddingLeft: '1.5rem',
+                  height: 40,
+                  color: 'rgba(0, 0, 0, 0.6)',
+                  '& .MuiInputBase-input': {
+                    color: '#464141',
+                    '&::placeholder': {
+                      opacity: '1'
+                    }
+                  }
+                }}
               />
             </Stack>
           </Collapse>

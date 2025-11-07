@@ -4,94 +4,66 @@ import { DateTime } from 'luxon';
 import { isNil } from 'lodash';
 
 import { Card, CardContent, Typography, Grid, Divider, Stack, Collapse, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
 import ApiKeyRevokeDialog from './ApiKeyRevokeDialog';
 
-import makeStyles from '@mui/styles/makeStyles';
+const StyledCard = styled(Card)({
+  marginBottom: 2,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#FFFFFF',
+  border: '1px solid #E0E5EB',
+  borderRadius: '0.75rem',
+  alignSelf: 'stretch',
+  flexGrow: 0,
+  order: 0,
+  width: '100%'
+});
 
-const useStyles = makeStyles(() => ({
-  card: {
-    marginBottom: 2,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #E0E5EB',
-    borderRadius: '0.75rem',
-    alignSelf: 'stretch',
-    flexGrow: 0,
-    order: 0,
-    width: '100%'
+const StyledCardContent = styled(CardContent)({
+  textAlign: 'left',
+  color: '#52637A',
+  width: '100%',
+  boxSizing: 'border-box',
+  padding: '1rem',
+  backgroundColor: '#FFFFFF',
+  '&:hover': {
+    backgroundColor: '#FFFFFF'
   },
-  content: {
-    textAlign: 'left',
-    color: '#52637A',
-    width: '100%',
-    boxSizing: 'border-box',
-    padding: '1rem',
-    backgroundColor: '#FFFFFF',
-    '&:hover': {
-      backgroundColor: '#FFFFFF'
-    },
-    '&:last-child': {
-      paddingBottom: '1rem'
-    }
-  },
-  label: {
-    fontSize: '1rem',
-    fontWeight: '400',
-    paddingRight: '0.5rem',
-    paddingBottom: '0.5rem',
-    paddingTop: '0.5rem',
-    textAlign: 'left',
-    width: '100%',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    cursor: 'pointer'
-  },
-  expirationDate: {
-    fontSize: '1rem',
-    fontWeight: '400',
-    paddingBottom: '0.5rem',
-    paddingTop: '0.5rem',
-    textAlign: 'right'
-  },
-  revokeButton: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'right'
-  },
-  dropdownText: {
-    color: '#1479FF',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    textAlign: 'center'
-  },
-  dropdownButton: {
-    color: '#1479FF',
-    fontSize: '0.8125rem',
-    fontWeight: '600',
-    cursor: 'pointer'
-  },
-  dropdownContentBox: {
-    boxSizing: 'border-box',
-    color: '#52637A',
-    fontSize: '1rem',
-    fontWeight: '400',
-    padding: '0.75rem',
-    backgroundColor: '#F7F7F7',
-    borderRadius: '0.9rem',
-    overflowWrap: 'break-word'
-  },
-  keyCardDivider: {
-    margin: '1rem 0'
+  '&:last-child': {
+    paddingBottom: '1rem'
   }
-}));
+});
+
+const DropdownIcon = styled('div')({
+  color: '#1479FF',
+  fontSize: '1rem',
+  fontWeight: '600',
+  cursor: 'pointer',
+  textAlign: 'center'
+});
+
+const DropdownButton = styled(Typography)({
+  color: '#1479FF',
+  fontSize: '0.8125rem',
+  fontWeight: '600',
+  cursor: 'pointer'
+});
+
+const DropdownContentBox = styled(Typography)({
+  boxSizing: 'border-box',
+  color: '#52637A',
+  fontSize: '1rem',
+  fontWeight: '400',
+  padding: '0.75rem',
+  backgroundColor: '#F7F7F7',
+  borderRadius: '0.9rem',
+  overflowWrap: 'break-word'
+});
 
 function ApiKeyCard(props) {
-  const classes = useStyles();
   const { apiKey, onRevoke } = props;
   const [openDropdown, setOpenDropdown] = useState(false);
   const [apiKeyRevokeOpen, setApiKeyRevokeOpen] = useState(false);
@@ -106,20 +78,52 @@ function ApiKeyCard(props) {
   };
 
   return (
-    <Card variant="outlined" className={classes.card}>
-      <CardContent className={classes.content}>
+    <StyledCard variant="outlined">
+      <StyledCardContent>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item xs={6}>
-            <Typography variant="body1" className={classes.label}>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: '1rem',
+                fontWeight: '400',
+                paddingRight: '0.5rem',
+                paddingBottom: '0.5rem',
+                paddingTop: '0.5rem',
+                textAlign: 'left',
+                width: '100%',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                cursor: 'pointer'
+              }}
+            >
               {apiKey.label}
             </Typography>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="body1" className={classes.expirationDate}>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: '1rem',
+                fontWeight: '400',
+                paddingBottom: '0.5rem',
+                paddingTop: '0.5rem',
+                textAlign: 'right'
+              }}
+            >
               {getExpirationDisplay()}
             </Typography>
           </Grid>
-          <Grid item xs={2} className={classes.revokeButton}>
+          <Grid
+            item
+            xs={2}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'right'
+            }}
+          >
             <Button color="error" variant="contained" onClick={handleApiKeyRevokeDialogOpen}>
               Revoke
             </Button>
@@ -127,22 +131,18 @@ function ApiKeyCard(props) {
           {!isNil(apiKey.apiKey) && (
             <>
               <Grid item xs={12}>
-                <Divider className={classes.keyCardDivider} />
+                <Divider sx={{ margin: '1rem 0' }} />
               </Grid>
               <Grid item xs={12}>
                 <Stack direction="row" onClick={() => setOpenDropdown((prevOpenState) => !prevOpenState)}>
-                  {!openDropdown ? (
-                    <KeyboardArrowRight className={classes.dropdownText} />
-                  ) : (
-                    <KeyboardArrowDown className={classes.dropdownText} />
-                  )}
-                  <Typography className={classes.dropdownButton}>KEY</Typography>
+                  {!openDropdown ? <DropdownIcon as={KeyboardArrowRight} /> : <DropdownIcon as={KeyboardArrowDown} />}
+                  <DropdownButton>KEY</DropdownButton>
                 </Stack>
                 <Collapse in={openDropdown} timeout="auto" unmountOnExit sx={{ marginTop: '1rem' }}>
                   <Stack direction="column" spacing="1.2rem">
-                    <Typography variant="body1" align="left" className={classes.dropdownContentBox}>
+                    <DropdownContentBox variant="body1" align="left">
                       {apiKey.apiKey}
-                    </Typography>
+                    </DropdownContentBox>
                   </Stack>
                 </Collapse>
               </Grid>
@@ -155,8 +155,8 @@ function ApiKeyCard(props) {
           apiKey={apiKey}
           onConfirm={onRevoke}
         />
-      </CardContent>
-    </Card>
+      </StyledCardContent>
+    </StyledCard>
   );
 }
 
