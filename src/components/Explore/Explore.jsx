@@ -9,8 +9,6 @@ import Sticky from 'react-sticky-el';
 import Alert from '@mui/material/Alert';
 import { Container, FormControl, Grid, InputLabel, MenuItem, Select, Stack, Button } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 // utility
 import { api, endpoints } from '../../api';
 import { host } from '../../host';
@@ -22,46 +20,6 @@ import filterConstants from 'utilities/filterConstants.js';
 import { sortByCriteria } from 'utilities/sortCriteria.js';
 import { EXPLORE_PAGE_SIZE } from 'utilities/paginationConstants.js';
 import FilterDialog from './FilterDialog.jsx';
-
-const useStyles = makeStyles((theme) => ({
-  gridWrapper: {
-    paddingTop: '2rem',
-    paddingBottom: '2rem'
-  },
-  nodataWrapper: {
-    backgroundColor: '#fff',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  resultsRow: {
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  results: {
-    marginLeft: '1rem',
-    color: theme.palette.secondary.dark
-  },
-  sortForm: {
-    backgroundColor: '#ffffff',
-    borderColor: '#E0E0E0',
-    borderRadius: '0.375em',
-    width: '23%',
-    textAlign: 'left'
-  },
-  filterButton: {
-    borderRadius: '0.4rem',
-    marginBottom: '1rem',
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  },
-  filterCardsContainer: {
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
-  }
-}));
 
 function Explore({ searchInputValue }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +37,6 @@ function Explore({ searchInputValue }) {
   const [isEndOfList, setIsEndOfList] = useState(false);
   const listBottom = useRef(null);
   const abortController = useMemo(() => new AbortController(), []);
-  const classes = useStyles();
 
   // Filterdialog props
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
@@ -279,23 +236,59 @@ function Explore({ searchInputValue }) {
 
   return (
     <Container maxWidth="lg">
-      <Grid container className={classes.gridWrapper}>
+      <Grid
+        container
+        sx={{
+          paddingTop: '2rem',
+          paddingBottom: '2rem'
+        }}
+      >
         <Grid container item xs={12}>
           <Grid item xs={3} className="hide-on-mobile"></Grid>
           <Grid item xs={12} md={9}>
-            <Stack direction="row" className={classes.resultsRow}>
-              <Typography variant="body2" className={`${classes.results} hide-on-mobile`}>
+            <Stack
+              direction="row"
+              sx={{
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <Typography
+                variant="body2"
+                className="hide-on-mobile"
+                sx={(theme) => ({
+                  marginLeft: '1rem',
+                  color: theme.palette.secondary.dark
+                })}
+              >
                 Showing {exploreData?.length} results out of {totalItems}
               </Typography>
               {!isLoading && (
-                <Button variant="contained" onClick={handleFilterDialogOpen} className={`${classes.filterButton}`}>
+                <Button
+                  variant="contained"
+                  onClick={handleFilterDialogOpen}
+                  sx={(theme) => ({
+                    borderRadius: '0.4rem',
+                    marginBottom: '1rem',
+                    [theme.breakpoints.up('md')]: {
+                      display: 'none'
+                    }
+                  })}
+                >
                   Filter results
                 </Button>
               )}
               <FormControl
-                sx={{ minWidth: '4.6875rem' }}
+                sx={{
+                  minWidth: '4.6875rem',
+                  backgroundColor: '#ffffff',
+                  borderColor: '#E0E0E0',
+                  borderRadius: '0.375em',
+                  width: '23%',
+                  textAlign: 'left'
+                }}
                 disabled={isLoading}
-                className={`${classes.sortForm} hide-on-mobile`}
+                className="hide-on-mobile"
                 size="small"
               >
                 <InputLabel>Sort</InputLabel>
@@ -316,12 +309,29 @@ function Explore({ searchInputValue }) {
           </Grid>
         </Grid>
         <Grid container item xs={12} spacing={5} pt={1}>
-          <Grid item xs={3} md={3} className={classes.filterCardsContainer}>
+          <Grid
+            item
+            xs={3}
+            md={3}
+            sx={(theme) => ({
+              [theme.breakpoints.down('md')]: {
+                display: 'none'
+              }
+            })}
+          >
             <Sticky>{renderFilterCards()}</Sticky>
           </Grid>
           <Grid item xs={12} md={9}>
             {!(exploreData && exploreData.length) && !isLoading ? (
-              <Grid container className={classes.nodataWrapper}>
+              <Grid
+                container
+                sx={{
+                  backgroundColor: '#fff',
+                  height: '100vh',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
                 <div style={{ marginTop: 20 }}>
                   <Alert style={{ marginTop: 10 }} variant="outlined" severity="warning">
                     Looks like we don&apos;t have anything matching that search. Try searching something else.

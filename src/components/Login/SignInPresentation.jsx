@@ -1,52 +1,57 @@
 import React from 'react';
 
-import { Stack, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Stack, Typography, Box } from '@mui/material';
 
 import logoWhite from '../../assets/zotLogoWhiteHorizontal.svg';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    backgroundColor: theme.palette.secondary.main,
-    minHeight: '100%',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  contentContainer: {
-    width: '51%',
-    height: '22%'
-  },
-  logoContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  logo: {
-    width: '64%'
-  },
-  mainText: {
-    color: '#F6F7F9',
-    fontWeight: '700',
-    width: '100%',
-    fontSize: '2.5rem',
-    lineHeight: '3rem'
-  }
-}));
-
 export default function SigninPresentation() {
-  const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <Stack spacing={'3rem'} className={classes.contentContainer} data-testid="presentation-container">
-        <div className={classes.logoContainer}>
-          <img src={logoWhite} alt="zot logo" className={classes.logo}></img>
-        </div>
-        <Typography variant="h2" className={classes.mainText}>
+    <Box
+      sx={(theme) => ({
+        backgroundColor: theme.palette.secondary.main,
+        minHeight: '100%',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      })}
+    >
+      <Stack
+        spacing={'3rem'}
+        sx={{
+          width: '51%',
+          height: '22%'
+        }}
+        data-testid="presentation-container"
+      >
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <img
+            src={logoWhite}
+            alt="zot logo"
+            style={{
+              width: '64%'
+            }}
+          ></img>
+        </Box>
+        <Typography
+          variant="h2"
+          sx={{
+            color: '#F6F7F9',
+            fontWeight: '700',
+            width: '100%',
+            fontSize: '2.5rem',
+            lineHeight: '3rem'
+          }}
+        >
           OCI-native container image registry, simplified
         </Typography>
       </Stack>
-    </div>
+    </Box>
   );
 }

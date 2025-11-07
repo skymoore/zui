@@ -4,45 +4,28 @@ import React, { useState } from 'react';
 // components
 import Typography from '@mui/material/Typography';
 import { Stack, InputBase, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import { makeStyles } from '@mui/styles';
 import TagCard from '../../Shared/TagCard';
 import { tagsSortByCriteria } from 'utilities/sortCriteria';
 
-const useStyles = makeStyles(() => ({
-  clickCursor: {
-    cursor: 'pointer'
-  },
-  search: {
-    position: 'relative',
-    maxWidth: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    boxShadow: 'none',
-    border: '0.063rem solid #E7E7E7',
-    borderRadius: '0.625rem'
-  },
-  searchIcon: {
-    color: '#52637A',
-    paddingRight: '3%'
-  },
-  searchInputBase: {
-    width: '90%',
-    paddingLeft: '1.5rem',
-    height: 40
-  },
-  input: {
-    color: '#464141',
-    fontSize: '1rem',
-    '&::placeholder': {
-      opacity: '1'
-    }
-  }
-}));
+const SearchStack = styled(Stack)({
+  position: 'relative',
+  maxWidth: '100%',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  boxShadow: 'none',
+  border: '0.063rem solid #E7E7E7',
+  borderRadius: '0.625rem'
+});
+
+const SearchIconWrapper = styled('div')({
+  color: '#52637A',
+  paddingRight: '3%'
+});
 
 export default function Tags(props) {
-  const classes = useStyles();
   const { tags, repoName, onTagDelete } = props;
   const [tagsFilter, setTagsFilter] = useState('');
   const [sortFilter, setSortFilter] = useState(tagsSortByCriteria.updateTimeDesc.value);
@@ -94,7 +77,7 @@ export default function Tags(props) {
         >
           Tags History
         </Typography>
-        <FormControl sx={{ m: '1', minWidth: '4.6875rem' }} className={classes.sortForm} size="small">
+        <FormControl sx={{ m: '1', minWidth: '4.6875rem' }} size="small">
           <InputLabel>Sort</InputLabel>
           <Select
             label="Sort"
@@ -110,17 +93,28 @@ export default function Tags(props) {
           </Select>
         </FormControl>
       </Stack>
-      <Stack className={classes.search}>
+      <SearchStack>
         <InputBase
           placeholder={'Search tags...'}
-          classes={{ root: classes.searchInputBase, input: classes.input }}
+          sx={{
+            width: '90%',
+            paddingLeft: '1.5rem',
+            height: 40,
+            '& input': {
+              color: '#464141',
+              fontSize: '1rem',
+              '&::placeholder': {
+                opacity: '1'
+              }
+            }
+          }}
           value={tagsFilter}
           onChange={handleTagsFilterChange}
         />
-        <div className={classes.searchIcon}>
+        <SearchIconWrapper>
           <SearchIcon />
-        </div>
-      </Stack>
+        </SearchIconWrapper>
+      </SearchStack>
       {renderTags(tags)}
     </Stack>
   );

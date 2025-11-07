@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import { api, endpoints } from 'api';
 import { host } from '../../host';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -17,74 +17,43 @@ import {
 import { isEmpty } from 'lodash';
 import NoDataComponent from 'components/Shared/NoDataComponent';
 
-const useStyles = makeStyles((theme) => ({
-  gridWrapper: {
-    marginTop: 10,
-    marginBottom: '5rem'
-  },
-  nodataWrapper: {
-    backgroundColor: '#fff',
-    height: '100vh'
-  },
-  exploreText: {
-    color: '#C0C0C0',
-    display: 'flex',
-    alignItems: 'left'
-  },
-  resultsRow: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    color: '#00000099'
-  },
-  title: {
-    fontWeight: '700',
-    color: '#0F2139',
-    width: '100%',
-    display: 'inline',
-    fontSize: '2.5rem',
-    textAlign: 'center',
-    letterSpacing: '-0.02rem'
-  },
-  sectionHeaderContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    width: '100%',
-    paddingTop: '1rem',
-    marginBottom: '1rem',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-end',
-      flexDirection: 'row'
-    }
-  },
-  sectionTitle: {
-    fontWeight: '700',
-    color: '#0F2139',
-    width: '100%',
-    fontSize: '2rem',
-    textAlign: 'center',
-    lineHeight: '2.375rem',
-    letterSpacing: '-0.01rem',
-    marginLeft: '0.5rem'
-  },
-  subtitle: {
-    color: '#00000099',
-    fontWeight: 400,
-    fontSize: '1rem',
-    textAlign: 'center',
-    lineHeight: '150%',
-    letterSpacing: '0.009375rem',
-    width: '65%'
-  },
-  viewAll: {
-    color: '#52637A',
-    fontWeight: '600',
-    fontSize: '1rem',
-    lineHeight: '1.5rem',
-    cursor: 'pointer',
-    marginRight: '0.5rem'
+const GridWrapper = styled(Stack)({
+  marginTop: 10,
+  marginBottom: '5rem'
+});
+
+const SectionHeaderContainer = styled(Stack)(({ theme }) => ({
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  width: '100%',
+  paddingTop: '1rem',
+  marginBottom: '1rem',
+  [theme.breakpoints.up('md')]: {
+    alignItems: 'flex-end',
+    flexDirection: 'row'
   }
 }));
+
+const SectionTitle = styled(Typography)({
+  fontWeight: '700',
+  color: '#0F2139',
+  width: '100%',
+  fontSize: '2rem',
+  textAlign: 'center',
+  lineHeight: '2.375rem',
+  letterSpacing: '-0.01rem',
+  marginLeft: '0.5rem'
+});
+
+const ViewAllText = styled(Typography)({
+  color: '#52637A',
+  fontWeight: '600',
+  fontSize: '1rem',
+  lineHeight: '1.5rem',
+  cursor: 'pointer',
+  marginRight: '0.5rem'
+});
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -99,7 +68,6 @@ function Home() {
 
   const navigate = useNavigate();
   const abortController = useMemo(() => new AbortController(), []);
-  const classes = useStyles();
 
   const getPopularData = () => {
     setIsLoadingPopular(true);
@@ -283,81 +251,67 @@ function Home() {
     return isNoData() === true ? (
       <NoDataComponent text="No images" />
     ) : (
-      <Stack alignItems="center" className={classes.gridWrapper}>
-        <Stack className={classes.sectionHeaderContainer} sx={{ paddingTop: '3rem' }}>
+      <GridWrapper alignItems="center">
+        <SectionHeaderContainer sx={{ paddingTop: '3rem' }}>
           <div>
-            <Typography variant="h4" align="left" className={classes.sectionTitle}>
+            <SectionTitle variant="h4" align="left">
               Most popular images
-            </Typography>
+            </SectionTitle>
           </div>
           <div onClick={() => handleClickViewAll('sortby', sortByCriteria.downloads.value)}>
-            <Typography variant="body2" className={classes.viewAll}>
-              View all
-            </Typography>
+            <ViewAllText variant="body2">View all</ViewAllText>
           </div>
-        </Stack>
+        </SectionHeaderContainer>
         {isLoadingPopular ? <Loading /> : renderCards(popularData, isLoadingPopular)}
         {/* currently most popular will be by downloads until stars are implemented */}
-        <Stack className={classes.sectionHeaderContainer}>
+        <SectionHeaderContainer>
           <div>
-            <Typography variant="h4" align="left" className={classes.sectionTitle}>
+            <SectionTitle variant="h4" align="left">
               Recently updated images
-            </Typography>
+            </SectionTitle>
           </div>
           <div>
-            <Typography
-              variant="body2"
-              className={classes.viewAll}
-              onClick={() => handleClickViewAll('sortby', sortByCriteria.updateTime.value)}
-            >
+            <ViewAllText variant="body2" onClick={() => handleClickViewAll('sortby', sortByCriteria.updateTime.value)}>
               View all
-            </Typography>
+            </ViewAllText>
           </div>
-        </Stack>
+        </SectionHeaderContainer>
         {isLoadingRecent ? <Loading /> : renderCards(recentData, isLoadingRecent)}
         {!isEmpty(bookmarkData) && (
           <>
-            <Stack className={classes.sectionHeaderContainer}>
+            <SectionHeaderContainer>
               <div>
-                <Typography variant="h4" align="left" className={classes.sectionTitle}>
+                <SectionTitle variant="h4" align="left">
                   Bookmarks
-                </Typography>
+                </SectionTitle>
               </div>
               <div>
-                <Typography
-                  variant="body2"
-                  className={classes.viewAll}
-                  onClick={() => handleClickViewAll('filter', 'IsBookmarked')}
-                >
+                <ViewAllText variant="body2" onClick={() => handleClickViewAll('filter', 'IsBookmarked')}>
                   View all
-                </Typography>
+                </ViewAllText>
               </div>
-            </Stack>
+            </SectionHeaderContainer>
             {isLoadingBookmarks ? <Loading /> : renderCards(bookmarkData, isLoadingBookmarks)}
           </>
         )}
         {!isEmpty(starData) && (
           <>
-            <Stack className={classes.sectionHeaderContainer}>
+            <SectionHeaderContainer>
               <div>
-                <Typography variant="h4" align="left" className={classes.sectionTitle}>
+                <SectionTitle variant="h4" align="left">
                   Stars
-                </Typography>
+                </SectionTitle>
               </div>
               <div>
-                <Typography
-                  variant="body2"
-                  className={classes.viewAll}
-                  onClick={() => handleClickViewAll('filter', 'IsStarred')}
-                >
+                <ViewAllText variant="body2" onClick={() => handleClickViewAll('filter', 'IsStarred')}>
                   View all
-                </Typography>
+                </ViewAllText>
               </div>
-            </Stack>
+            </SectionHeaderContainer>
             {isLoadingStars ? <Loading /> : renderCards(starData, isLoadingStars)}
           </>
         )}
-      </Stack>
+      </GridWrapper>
     );
   };
 

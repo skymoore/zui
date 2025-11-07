@@ -31,99 +31,11 @@ import IsDependentOn from './Tabs/IsDependentOn';
 import Loading from '../Shared/Loading';
 import { VulnerabilityIconCheck, SignatureIconCheck } from 'utilities/vulnerabilityAndSignatureCheck';
 import ReferredBy from './Tabs/ReferredBy';
-import makeStyles from '@mui/styles/makeStyles';
-
 // placeholder images
 import repocube1 from '../../assets/repocube-1.png';
 import repocube2 from '../../assets/repocube-2.png';
 import repocube3 from '../../assets/repocube-3.png';
 import repocube4 from '../../assets/repocube-4.png';
-
-const useStyles = makeStyles((theme) => ({
-  pageWrapper: {
-    backgroundColor: 'transparent',
-    display: 'flex',
-    marginBottom: '3%'
-  },
-  repoName: {
-    fontWeight: '600',
-    fontSize: '1.5rem',
-    color: theme.palette.secondary.main,
-    textAlign: 'left'
-  },
-  avatar: {
-    height: '1.438rem',
-    width: '1.438rem',
-    objectFit: 'fill'
-  },
-  digest: {
-    textAlign: 'left',
-    fontSize: '1rem',
-    lineHeight: '1.5rem',
-    color: '#52637A',
-    maxWidth: '100%',
-    [theme.breakpoints.down('md')]: {
-      padding: '0.5rem 0 0 0',
-      fontSize: '0.5rem'
-    }
-  },
-  media: {
-    borderRadius: '3.125em'
-  },
-  tabsContainer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    margin: '1.625rem 0'
-  },
-  tabs: {
-    borderRadius: '0.375rem'
-  },
-  tabsButtons: {
-    backgroundColor: '#F6F7F9',
-    color: '#656C75',
-    border: '2px solid #E0E5EB',
-    borderRadius: '0.375rem',
-    padding: '0.313rem 0.75rem',
-    textTransform: 'none',
-    fontWeight: '700',
-    fontSize: '0.875rem',
-    marginLeft: '0!important',
-    '&.Mui-selected': {
-      backgroundColor: 'rgba(15, 33, 57, 0.05)',
-      color: theme.palette.secondary.main,
-      border: '2px solid #0F2139!important'
-    }
-  },
-  tabContent: {
-    height: '100%',
-    [theme.breakpoints.down('md')]: {
-      padding: '0'
-    }
-  },
-  metadata: {
-    paddingLeft: '1.25rem',
-    [theme.breakpoints.down('md')]: {
-      marginTop: '1rem',
-      paddingLeft: '0'
-    }
-  },
-  cardContent: {
-    paddingBottom: '1rem'
-  },
-  tabCardContent: {
-    padding: '1.5rem'
-  },
-  cardRoot: {
-    boxShadow: 'none!important',
-    borderRadius: '0.75rem'
-  },
-  header: {
-    letterSpacing: '-0.01rem',
-    [theme.breakpoints.down('md')]: {
-      padding: '0'
-    }
-  }
-}));
 
 // temporary utility to get image
 const randomIntFromInterval = (min, max) => {
@@ -150,8 +62,6 @@ function TagDetails() {
 
   // get url param from <Route here (i.e. image name)
   const { reponame, tag } = useParams();
-
-  const classes = useStyles();
 
   useEffect(() => {
     // if same-page navigation because of tag update, following 2 lines help ux
@@ -257,12 +167,32 @@ function TagDetails() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Grid container className={classes.pageWrapper}>
+        <Grid
+          container
+          sx={{
+            backgroundColor: 'transparent',
+            display: 'flex',
+            marginBottom: '3%'
+          }}
+        >
           <Grid item xs={12} md={12}>
-            <Card className={classes.cardRoot}>
-              <CardContent className={classes.cardContent}>
+            <Card
+              sx={{
+                boxShadow: 'none!important',
+                borderRadius: '0.75rem'
+              }}
+            >
+              <CardContent sx={{ paddingBottom: '1rem' }}>
                 <Grid container>
-                  <Grid item xs={12} md={9} className={classes.header}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={9}
+                    sx={{
+                      letterSpacing: '-0.01rem',
+                      padding: { xs: '0', md: 'inherit' }
+                    }}
+                  >
                     <Stack
                       alignItems="center"
                       sx={{ width: { xs: '100%', md: 'auto' }, marginBottom: '1rem' }}
@@ -271,15 +201,25 @@ function TagDetails() {
                     >
                       <Stack alignItems="center" sx={{ width: { xs: '100%', md: 'auto' } }} direction="row" spacing={1}>
                         <CardMedia
-                          classes={{
-                            root: classes.media,
-                            img: classes.avatar
-                          }}
                           component="img"
                           image={placeholderImage.current}
                           alt="icon"
+                          sx={{
+                            borderRadius: '3.125em',
+                            height: '1.438rem',
+                            width: '1.438rem',
+                            objectFit: 'fill'
+                          }}
                         />
-                        <Typography variant="h4" className={classes.repoName}>
+                        <Typography
+                          variant="h4"
+                          sx={(theme) => ({
+                            fontWeight: '600',
+                            fontSize: '1.5rem',
+                            color: theme.palette.secondary.main,
+                            textAlign: 'left'
+                          })}
+                        >
                           <span className="hide-on-mobile">{reponame}</span>:{tag}
                         </Typography>
                       </Stack>
@@ -294,7 +234,7 @@ function TagDetails() {
                     </Stack>
                     {imageDetailData?.manifests && imageDetailData.manifests.length > 0 && (
                       <Stack direction="row" alignItems="center" spacing="1rem">
-                        <FormControl sx={{ m: '1', minWidth: '4.6875rem' }} className={classes.sortForm} size="small">
+                        <FormControl sx={{ m: '1', minWidth: '4.6875rem' }} size="small">
                           <InputLabel>OS/Arch</InputLabel>
                           {!isEmpty(selectedManifest) && (
                             <Select
@@ -311,7 +251,20 @@ function TagDetails() {
                             </Select>
                           )}
                         </FormControl>
-                        <Typography gutterBottom className={classes.digest}>
+                        <Typography
+                          gutterBottom
+                          sx={(theme) => ({
+                            textAlign: 'left',
+                            fontSize: '1rem',
+                            lineHeight: '1.5rem',
+                            color: '#52637A',
+                            maxWidth: '100%',
+                            [theme.breakpoints.down('md')]: {
+                              padding: '0.5rem 0 0 0',
+                              fontSize: '0.5rem'
+                            }
+                          })}
+                        >
                           Digest: {selectedManifest?.digest}
                         </Typography>
                       </Stack>
@@ -321,18 +274,42 @@ function TagDetails() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={12} className={classes.tabsContainer}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              margin: '1.625rem 0'
+            }}
+          >
             <ToggleButtonGroup
               color="primary"
-              classes={{
-                root: classes.tabs,
-                grouped: classes.tabsButtons
-              }}
               value={selectedTab}
               exclusive
               onChange={handleTabChange}
               aria-label="Tabs"
               disabled={isLoading}
+              sx={{
+                borderRadius: '0.375rem',
+                '& .MuiToggleButton-root': {
+                  backgroundColor: '#F6F7F9',
+                  color: '#656C75',
+                  border: '2px solid #E0E5EB',
+                  borderRadius: '0.375rem',
+                  padding: '0.313rem 0.75rem',
+                  textTransform: 'none',
+                  fontWeight: '700',
+                  fontSize: '0.875rem',
+                  marginLeft: '0!important',
+                  '&.Mui-selected': (theme) => ({
+                    backgroundColor: 'rgba(15, 33, 57, 0.05)',
+                    color: theme.palette.secondary.main,
+                    border: '2px solid #0F2139!important'
+                  })
+                }
+              }}
             >
               <ToggleButton value="Layers" role="tab">
                 Layers
@@ -352,16 +329,29 @@ function TagDetails() {
             </ToggleButtonGroup>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Card className={classes.cardRoot}>
-              <CardContent
-                key={`card_content_manifest_key_${selectedManifest?.digest}`}
-                className={classes.tabCardContent}
-              >
+            <Card
+              sx={{
+                boxShadow: 'none!important',
+                borderRadius: '0.75rem'
+              }}
+            >
+              <CardContent key={`card_content_manifest_key_${selectedManifest?.digest}`} sx={{ padding: '1.5rem' }}>
                 {renderTabContent()}
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4} className={classes.metadata}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={(theme) => ({
+              paddingLeft: '1.25rem',
+              [theme.breakpoints.down('md')]: {
+                marginTop: '1rem',
+                paddingLeft: '0'
+              }
+            })}
+          >
             <TagDetailsMetadata
               platform={getPlatform()}
               size={selectedManifest?.size}

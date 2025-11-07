@@ -6,31 +6,15 @@ import { api, endpoints } from '../../../api';
 
 // components
 import { Typography, Stack } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { host } from '../../../host';
 import Loading from '../../Shared/Loading';
 import TagCard from '../../Shared/TagCard';
 import { mapToImage } from 'utilities/objectModels';
 import { EXPLORE_PAGE_SIZE } from 'utilities/paginationConstants';
 
-const useStyles = makeStyles(() => ({
-  title: {
-    marginBottom: '1.7rem',
-    color: 'rgba(0, 0, 0, 0.87)',
-    fontSize: '1.5rem',
-    fontWeight: '600'
-  },
-  none: {
-    color: '#52637A',
-    fontSize: '1.4rem',
-    fontWeight: '600'
-  }
-}));
-
 function IsDependentOn(props) {
   const [images, setImages] = useState([]);
   const { name } = props;
-  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
   const abortController = useMemo(() => new AbortController(), []);
 
@@ -115,7 +99,20 @@ function IsDependentOn(props) {
         );
       })
     ) : (
-      <div>{!isLoading && <Typography className={classes.none}> Nothing found </Typography>}</div>
+      <div>
+        {!isLoading && (
+          <Typography
+            sx={{
+              color: '#52637A',
+              fontSize: '1.4rem',
+              fontWeight: '600'
+            }}
+          >
+            {' '}
+            Nothing found{' '}
+          </Typography>
+        )}
+      </div>
     );
   };
 
@@ -131,7 +128,18 @@ function IsDependentOn(props) {
 
   return (
     <div data-testid="dependents-container">
-      <Typography variant="h4" gutterBottom component="div" align="left" className={classes.title}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        component="div"
+        align="left"
+        sx={{
+          marginBottom: '1.7rem',
+          color: 'rgba(0, 0, 0, 0.87)',
+          fontSize: '1.5rem',
+          fontWeight: '600'
+        }}
+      >
         Used by
       </Typography>
       <Stack direction="column" spacing={2}>

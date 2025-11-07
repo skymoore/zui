@@ -22,130 +22,6 @@ import Loading from '../Shared/Loading';
 
 import { GoogleLoginButton, GithubLoginButton, GitlabLoginButton, OIDCLoginButton } from './ThirdPartyLoginComponents';
 
-// styling
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles(() => ({
-  cardContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative'
-  },
-  loginCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '60%',
-    height: '60%',
-    background: '#FFFFFF',
-    boxShadow: '0rem 0.3125rem 0.625rem rgba(131, 131, 131, 0.08)',
-    borderRadius: '0.75rem',
-    minWidth: '30rem'
-  },
-  loginCardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    border: '0.1875rem black',
-    width: '100%',
-    padding: '3rem'
-  },
-  text: {
-    color: '#14191F',
-    width: '100%',
-    fontSize: '1.5rem',
-    lineHeight: '2.25rem',
-    letterSpacing: '-0.01rem',
-    marginBottom: '0.25rem'
-  },
-  subtext: {
-    color: '#52637A',
-    width: '100%',
-    fontSize: '1rem',
-    marginBottom: '2.375rem'
-  },
-  textField: {
-    borderRadius: '0.25rem',
-    marginTop: 0,
-    marginBottom: '1.5rem'
-  },
-  textColor: {
-    color: '#8596AD'
-  },
-  labelColor: {
-    color: '#667C99',
-    '&:focused': {
-      color: '#667C99'
-    }
-  },
-  continueButton: {
-    textTransform: 'none',
-    background: '#F15527',
-    color: '#FFFFFF',
-    fontSize: '1.438rem',
-    fontWeight: '600',
-    height: '3.125rem',
-    borderRadius: '0.25rem',
-    letterSpacing: '0.01rem',
-    marginBottom: '1rem',
-    padding: 0,
-    boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: '#F15527',
-      boxShadow: 'none'
-    }
-  },
-  continueAsGuestButton: {
-    textTransform: 'none',
-    background: '#FFFFFF',
-    color: '#52637A',
-    fontSize: '1.438rem',
-    fontWeight: '600',
-    height: '3.125rem',
-    borderRadius: '0.25rem',
-    border: '1px solid #52637A',
-    letterSpacing: '0.01rem',
-    marginBottom: '1rem',
-    padding: 0,
-    boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: '#FFFFFF',
-      boxShadow: 'none'
-    }
-  },
-  gitLogo: {
-    height: '24px',
-    borderRadius: '0.25rem',
-    paddingLeft: '1rem'
-  },
-  line: {
-    width: '100%',
-    textAlign: 'center',
-    borderBottom: '0.0625rem solid #C2CBD6',
-    lineHeight: '0.1rem',
-    margin: '0.625rem 0 1.25rem'
-  },
-  lineSpan: {
-    background: '#ffffff',
-    color: '#C2CBD6',
-    padding: '0 0.625rem',
-    fontSize: '1rem',
-    fontWeight: '400',
-    paddingLeft: '1rem',
-    paddingRight: '1rem'
-  },
-  divider: {
-    color: '#C2CBD6',
-    marginBottom: '2rem',
-    width: '100%'
-  },
-  thirdPartyLoginContainer: {
-    width: '100%',
-    marginBottom: '2rem'
-  }
-}));
-
 export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = () => {} }) {
   const [usernameError, setUsernameError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
@@ -158,7 +34,6 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
   const [isGuestLoginEnabled, setIsGuestLoginEnabled] = useState(false);
   const abortController = useMemo(() => new AbortController(), []);
   const navigate = useNavigate();
-  const classes = useStyles();
 
   useEffect(() => {
     setIsLoading(true);
@@ -315,7 +190,14 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
     let oidcName = authMethods.openid?.providers?.oidc?.name;
 
     return (
-      <Stack direction="column" spacing="1rem" className={classes.thirdPartyLoginContainer}>
+      <Stack
+        direction="column"
+        spacing="1rem"
+        sx={{
+          width: '100%',
+          marginBottom: '2rem'
+        }}
+      >
         {isGithub && <GithubLoginButton handleClick={handleClickExternalLogin} />}
         {isGoogle && <GoogleLoginButton handleClick={handleClickExternalLogin} />}
         {isGitlab && <GitlabLoginButton handleClick={handleClickExternalLogin} />}
@@ -325,24 +207,82 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
   };
 
   return (
-    <div className={classes.cardContainer} data-testid="signin-container">
+    <div
+      data-testid="signin-container"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative'
+      }}
+    >
       {isLoading ? (
         <Loading />
       ) : (
-        <Card className={classes.loginCard}>
-          <CardContent className={classes.loginCardContent}>
+        <Card
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '60%',
+            height: '60%',
+            background: '#FFFFFF',
+            boxShadow: '0rem 0.3125rem 0.625rem rgba(131, 131, 131, 0.08)',
+            borderRadius: '0.75rem',
+            minWidth: '30rem'
+          }}
+        >
+          <CardContent
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              border: '0.1875rem black',
+              width: '100%',
+              padding: '3rem'
+            }}
+          >
             <CssBaseline />
-            <Typography align="left" className={classes.text} component="h1" variant="h4">
+            <Typography
+              align="left"
+              component="h1"
+              variant="h4"
+              sx={{
+                color: '#14191F',
+                width: '100%',
+                fontSize: '1.5rem',
+                lineHeight: '2.25rem',
+                letterSpacing: '-0.01rem',
+                marginBottom: '0.25rem'
+              }}
+            >
               Sign In
             </Typography>
-            <Typography align="left" className={classes.subtext} variant="body1" gutterBottom>
+            <Typography
+              align="left"
+              variant="body1"
+              gutterBottom
+              sx={{
+                color: '#52637A',
+                width: '100%',
+                fontSize: '1rem',
+                marginBottom: '2.375rem'
+              }}
+            >
               Welcome back! Please login.
             </Typography>
             {renderThirdPartyLoginMethods()}
             {Object.keys(authMethods).length > 1 &&
               Object.keys(authMethods).includes('openid') &&
               Object.keys(authMethods.openid.providers).length > 0 && (
-                <Divider className={classes.divider} data-testid="openid-divider">
+                <Divider
+                  data-testid="openid-divider"
+                  sx={{
+                    color: '#C2CBD6',
+                    marginBottom: '2rem',
+                    width: '100%'
+                  }}
+                >
                   or
                 </Divider>
               )}
@@ -355,13 +295,24 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
                   id="username"
                   label="Username"
                   name="username"
-                  className={classes.textField}
-                  inputProps={{ className: classes.textColor }}
-                  InputLabelProps={{ className: classes.labelColor }}
                   onInput={(e) => handleChange(e, 'username')}
                   error={usernameError != null}
                   helperText={usernameError}
                   onKeyDown={(e) => handleLoginInputFieldKeyDown(e)}
+                  sx={{
+                    borderRadius: '0.25rem',
+                    marginTop: 0,
+                    marginBottom: '1.5rem',
+                    '& .MuiInputBase-input': {
+                      color: '#8596AD'
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: '#667C99',
+                      '&:focused': {
+                        color: '#667C99'
+                      }
+                    }
+                  }}
                 />
                 <TextField
                   margin="normal"
@@ -371,13 +322,24 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
                   label="Enter password"
                   type="password"
                   id="password"
-                  className={classes.textField}
-                  inputProps={{ className: classes.textColor }}
-                  InputLabelProps={{ className: classes.labelColor }}
                   onInput={(e) => handleChange(e, 'password')}
                   error={passwordError != null}
                   helperText={passwordError}
                   onKeyDown={(e) => handleLoginInputFieldKeyDown(e)}
+                  sx={{
+                    borderRadius: '0.25rem',
+                    marginTop: 0,
+                    marginBottom: '1.5rem',
+                    '& .MuiInputBase-input': {
+                      color: '#8596AD'
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: '#667C99',
+                      '&:focused': {
+                        color: '#667C99'
+                      }
+                    }
+                  }}
                 />
                 {requestProcessing && <CircularProgress style={{ marginTop: 20 }} color="secondary" />}
                 {requestError && (
@@ -389,9 +351,25 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
                   <Button
                     fullWidth
                     variant="contained"
-                    className={classes.continueButton}
                     onClick={handleClick}
                     data-testid="basic-auth-submit-btn"
+                    sx={{
+                      textTransform: 'none',
+                      background: '#F15527',
+                      color: '#FFFFFF',
+                      fontSize: '1.438rem',
+                      fontWeight: '600',
+                      height: '3.125rem',
+                      borderRadius: '0.25rem',
+                      letterSpacing: '0.01rem',
+                      marginBottom: '1rem',
+                      padding: 0,
+                      boxShadow: 'none',
+                      '&:hover': {
+                        backgroundColor: '#F15527',
+                        boxShadow: 'none'
+                      }
+                    }}
                   >
                     Continue
                   </Button>
@@ -402,8 +380,25 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn, wrapperSetLoading = 
               <Button
                 fullWidth
                 variant="contained"
-                className={classes.continueAsGuestButton}
                 onClick={handleGuestClick}
+                sx={{
+                  textTransform: 'none',
+                  background: '#FFFFFF',
+                  color: '#52637A',
+                  fontSize: '1.438rem',
+                  fontWeight: '600',
+                  height: '3.125rem',
+                  borderRadius: '0.25rem',
+                  border: '1px solid #52637A',
+                  letterSpacing: '0.01rem',
+                  marginBottom: '1rem',
+                  padding: 0,
+                  boxShadow: 'none',
+                  '&:hover': {
+                    backgroundColor: '#FFFFFF',
+                    boxShadow: 'none'
+                  }
+                }}
               >
                 Continue as guest
               </Button>

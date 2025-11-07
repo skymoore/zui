@@ -1,41 +1,26 @@
 // components
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header/Header.jsx';
 
-import makeStyles from '@mui/styles/makeStyles';
 import { Container, Grid, Stack } from '@mui/material';
 import Explore from 'components/Explore/Explore.jsx';
-import { useState } from 'react';
-
-const useStyles = makeStyles(() => ({
-  container: {
-    paddingTop: 30,
-    paddingBottom: 5,
-    height: '100%',
-    minWidth: '60%'
-  },
-  gridWrapper: {
-    border: '0.0625rem #f2f2f2 dashed'
-  },
-  pageWrapper: {
-    height: '100%'
-  },
-  tile: {
-    width: '100%',
-    padding: 5
-  }
-}));
 
 function ExplorePage() {
-  const classes = useStyles();
   const [searchCurrentValue, setSearchCurrentValue] = useState();
 
   return (
-    <Stack className={classes.pageWrapper} direction="column" data-testid="explore-container">
+    <Stack sx={{ height: '100%' }} direction="column" data-testid="explore-container">
       <Header setSearchCurrentValue={setSearchCurrentValue} />
-      <Container className={classes.container}>
-        <Grid container className={classes.gridWrapper}>
-          <Grid item className={classes.tile}>
+      <Container
+        sx={{
+          paddingTop: 30,
+          paddingBottom: 5,
+          height: '100%',
+          minWidth: '60%'
+        }}
+      >
+        <Grid container sx={{ border: '0.0625rem #f2f2f2 dashed' }}>
+          <Grid item sx={{ width: '100%', padding: 5 }}>
             <Explore searchInputValue={searchCurrentValue} />
           </Grid>
         </Grid>

@@ -1,92 +1,88 @@
-import React from 'react';
-import { makeStyles } from '@mui/styles';
+import React, { useState } from 'react';
 import { Card, CardContent, Stack, Tooltip, Typography, Collapse, Box, Grid } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
-import { useState } from 'react';
 
-const useStyles = makeStyles(() => ({
-  refCard: {
-    marginBottom: 2,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    background: '#FFFFFF',
-    boxShadow: 'none!important',
-    borderRadius: '1.875rem',
-    flex: 'none',
-    alignSelf: 'stretch',
-    flexGrow: 0,
-    order: 0,
-    width: '100%'
-  },
-  card: {
-    marginBottom: '2rem',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    background: '#FFFFFF',
-    boxShadow: '0rem 0.3125rem 0.625rem rgba(131, 131, 131, 0.08)',
-    borderRadius: '1.875rem',
-    flex: 'none',
-    alignSelf: 'stretch',
-    flexGrow: 0,
-    order: 0,
-    width: '100%'
-  },
-  content: {
-    textAlign: 'left',
-    color: '#606060',
-    padding: '2% 3% 2% 3%',
-    width: '100%'
-  },
-  clickCursor: {
-    cursor: 'pointer'
-  },
-  cardText: {
-    color: '#000000',
-    fontSize: '1rem',
-    paddingBottom: '0.5rem',
-    paddingTop: '0.5rem',
-    textOverflow: 'ellipsis'
-  },
-  dropdown: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  dropdownText: {
-    color: '#1479FF',
-    paddingTop: '1rem',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    textAlign: 'center'
-  }
-}));
+const StyledCard = styled(Card)({
+  marginBottom: '2rem',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  background: '#FFFFFF',
+  boxShadow: '0rem 0.3125rem 0.625rem rgba(131, 131, 131, 0.08)',
+  borderRadius: '1.875rem',
+  flex: 'none',
+  alignSelf: 'stretch',
+  flexGrow: 0,
+  order: 0,
+  width: '100%'
+});
+
+const StyledCardContent = styled(CardContent)({
+  textAlign: 'left',
+  color: '#606060',
+  padding: '2% 3% 2% 3%',
+  width: '100%'
+});
+
+const DropdownIcon = styled('div')({
+  color: '#1479FF',
+  paddingTop: '1rem',
+  fontSize: '1rem',
+  fontWeight: '600',
+  cursor: 'pointer',
+  textAlign: 'center'
+});
 
 export default function ReferrerCard(props) {
   const { artifactType, mediaType, size, digest, annotations } = props;
   const [digestDropdownOpen, setDigestDropdownOpen] = useState(false);
   const [annotationDropdownOpen, setAnnotationDropdownOpen] = useState(false);
-  const classes = useStyles();
 
   return (
-    <Card className={classes.card} raised>
-      <CardContent className={classes.content}>
-        <Typography variant="body1" align="left" className={classes.cardText}>
+    <StyledCard raised>
+      <StyledCardContent>
+        <Typography
+          variant="body1"
+          align="left"
+          sx={{
+            color: '#000000',
+            fontSize: '1rem',
+            paddingBottom: '0.5rem',
+            paddingTop: '0.5rem',
+            textOverflow: 'ellipsis'
+          }}
+        >
           Type: {artifactType && `${artifactType}`}
         </Typography>
-        <Typography variant="body1" align="left" className={classes.cardText}>
+        <Typography
+          variant="body1"
+          align="left"
+          sx={{
+            color: '#000000',
+            fontSize: '1rem',
+            paddingBottom: '0.5rem',
+            paddingTop: '0.5rem',
+            textOverflow: 'ellipsis'
+          }}
+        >
           Media type: {mediaType && `${mediaType}`}
         </Typography>
-        <Typography variant="body1" align="left" className={classes.cardText}>
+        <Typography
+          variant="body1"
+          align="left"
+          sx={{
+            color: '#000000',
+            fontSize: '1rem',
+            paddingBottom: '0.5rem',
+            paddingTop: '0.5rem',
+            textOverflow: 'ellipsis'
+          }}
+        >
           Size: {size && `${size}`}
         </Typography>
         <Stack direction="row" onClick={() => setDigestDropdownOpen(!digestDropdownOpen)}>
-          {!digestDropdownOpen ? (
-            <KeyboardArrowRight className={classes.dropdownText} />
-          ) : (
-            <KeyboardArrowDown className={classes.dropdownText} />
-          )}
+          {!digestDropdownOpen ? <DropdownIcon as={KeyboardArrowRight} /> : <DropdownIcon as={KeyboardArrowDown} />}
           <Typography
             sx={{
               color: '#1479FF',
@@ -110,11 +106,7 @@ export default function ReferrerCard(props) {
         </Collapse>
 
         <Stack direction="row" onClick={() => setAnnotationDropdownOpen(!annotationDropdownOpen)}>
-          {!annotationDropdownOpen ? (
-            <KeyboardArrowRight className={classes.dropdownText} />
-          ) : (
-            <KeyboardArrowDown className={classes.dropdownText} />
-          )}
+          {!annotationDropdownOpen ? <DropdownIcon as={KeyboardArrowRight} /> : <DropdownIcon as={KeyboardArrowDown} />}
           <Typography
             sx={{
               color: '#1479FF',
@@ -140,7 +132,7 @@ export default function ReferrerCard(props) {
             </Grid>
           </Box>
         </Collapse>
-      </CardContent>
-    </Card>
+      </StyledCardContent>
+    </StyledCard>
   );
 }
