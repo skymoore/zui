@@ -5,6 +5,7 @@ import React from 'react';
 
 import { Container, Grid, Stack } from '@mui/material';
 import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
 import TagDetails from 'components/Tag/TagDetails';
 import ExploreHeader from 'components/Header/ExploreHeader';
 
@@ -45,6 +46,7 @@ function TagPage() {
           </Grid>
         </Grid>
       </Container>
+      <Footer/>
     </Stack>
   );
 }

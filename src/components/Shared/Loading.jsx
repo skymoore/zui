@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import logo from '../../assets/Zot2.svg';
 
 const Loading = () => {
   return (
@@ -19,7 +18,7 @@ const Loading = () => {
         height: '100%'
       }}
     >
-      <img src={logo} className="App-logo Loading" alt="logo" />
+      <img src="/logo.svg" className="App-logo Loading" alt="logo" />
     </Box>
   );
 };

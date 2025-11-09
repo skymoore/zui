@@ -2,19 +2,17 @@ import React from 'react';
 
 import { Stack, Typography, Box } from '@mui/material';
 
-import logoWhite from '../../assets/zotLogoWhiteHorizontal.svg';
-
 export default function SigninPresentation() {
   return (
     <Box
-      sx={(theme) => ({
-        backgroundColor: theme.palette.secondary.main,
+      sx={{
+        backgroundColor: '#000000',
         minHeight: '100%',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
-      })}
+      }}
     >
       <Stack
         spacing={'3rem'}
@@ -32,7 +30,7 @@ export default function SigninPresentation() {
           }}
         >
           <img
-            src={logoWhite}
+            src="/logo.svg"
             alt="zot logo"
             style={{
               width: '64%'
@@ -43,13 +41,12 @@ export default function SigninPresentation() {
           variant="h2"
           sx={{
             color: '#F6F7F9',
-            fontWeight: '700',
-            width: '100%',
-            fontSize: '2.5rem',
-            lineHeight: '3rem'
+            fontWeight: '400',
+            fontSize: '1.5rem',
+            lineHeight: '2rem'
           }}
         >
-          OCI-native container image registry, simplified
+          container image registry
         </Typography>
       </Stack>
     </Box>

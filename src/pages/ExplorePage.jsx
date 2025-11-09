@@ -1,6 +1,7 @@
 // components
 import React, { useState } from 'react';
-import Header from '../components/Header/Header.jsx';
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
 
 import { Container, Grid, Stack } from '@mui/material';
 import Explore from 'components/Explore/Explore.jsx';
@@ -9,7 +10,7 @@ function ExplorePage() {
   const [searchCurrentValue, setSearchCurrentValue] = useState();
 
   return (
-    <Stack sx={{ height: '100%', minHeight: '100vh' }} direction="column" data-testid="explore-container">
+    <Stack sx={{ minHeight: '100vh', display: 'flex', flexFlow: 'column' }} direction="column" data-testid="explore-container">
       <Header setSearchCurrentValue={setSearchCurrentValue} />
       <Container
         sx={(theme) => ({
@@ -38,6 +39,7 @@ function ExplorePage() {
           </Grid>
         </Grid>
       </Container>
+      <Footer/>
     </Stack>
   );
 }

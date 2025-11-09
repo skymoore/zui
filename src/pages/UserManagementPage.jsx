@@ -6,8 +6,9 @@ import { getLoggedInUser } from 'utilities/authUtilities.js';
 
 import { Container, Grid, Stack } from '@mui/material';
 
-import Header from '../components/Header/Header.jsx';
-import ApiKeys from '../components/User/ApiKeys/ApiKeys.jsx';
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
+import ApiKeys from 'components/User/ApiKeys/ApiKeys';
 
 function UserManagementPage() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function UserManagementPage() {
           </Grid>
         </Grid>
       </Container>
+      <Footer/>
     </Stack>
   );
 }

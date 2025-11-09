@@ -1,13 +1,14 @@
 // components
 import React from 'react';
 import Header from '../components/Header/Header.jsx';
+import Footer from '../components/Footer/Footer.jsx';
 
 import { Container, Grid, Stack } from '@mui/material';
 import Home from 'components/Home/Home.jsx';
 
 function HomePage() {
   return (
-    <Stack sx={{ height: '100%', minHeight: '100vh' }} direction="column" data-testid="homepage-container">
+    <Stack sx={{ minHeight: '100vh', display: 'flex', flexFlow: 'column' }} direction="column" data-testid="homepage-container">
       <Header />
       <Container
         maxWidth="lg"
@@ -23,6 +24,7 @@ function HomePage() {
           </Grid>
         </Grid>
       </Container>
+      <Footer/>
     </Stack>
   );
 }

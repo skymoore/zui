@@ -7,6 +7,7 @@ import SignIn from '../components/Login/SignIn';
 import { Grid, Stack } from '@mui/material';
 import SigninPresentation from 'components/Login/SignInPresentation';
 import Loading from 'components/Shared/Loading';
+import Footer from 'components/Footer/Footer'
 
 function LoginPage({ isLoggedIn, setIsLoggedIn }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +49,7 @@ function LoginPage({ isLoggedIn, setIsLoggedIn }) {
           <SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} wrapperSetLoading={setIsLoading} />
         </Grid>
       </Grid>
+      <Footer/>
     </Stack>
   );
 }

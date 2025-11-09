@@ -5,14 +5,10 @@ import { Link, useLocation } from 'react-router';
 import { isAuthenticated, isAuthenticationEnabled, logoutUser } from '../../utilities/authUtilities';
 
 // components
-import { AppBar, Toolbar, Grid, Button } from '@mui/material';
+import { AppBar, Toolbar, Grid, Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchSuggestion from './SearchSuggestion';
 import UserAccountMenu from './UserAccountMenu';
-// styling
-import logo from '../../assets/zotLogoWhite.svg';
-import logoxs from '../../assets/zotLogoWhiteSmall.svg';
-import githubLogo from '../../assets/Git.png';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -20,7 +16,7 @@ const StyledToolbar = styled(Toolbar)({
   alignItems: 'center',
   justifyContent: 'center',
   padding: 0,
-  backgroundColor: '#0F2139',
+  backgroundColor: '#000000',
   height: '100%',
   width: '100%',
   borderBottom: '0.0625rem solid #BDBDBD',
@@ -57,8 +53,8 @@ const HeaderLink = styled('a')({
 });
 
 const Logo = styled('img')({
-  maxWidth: '130px',
-  maxHeight: '30px'
+  maxWidth: '100px',
+  maxHeight: '50px'
 });
 
 const SignInButton = styled(Button)({
@@ -114,32 +110,14 @@ function Header({ setSearchCurrentValue = () => {} }) {
           <GridItem item container xs={3} md={4} spacing="1.5rem">
             <Grid item>
               <Link to="/home">
-                <picture>
-                  <source media="(min-width:600px)" srcSet={logo} />
-                  <Logo alt="zot" src={logoxs} />
-                </picture>
+                <Logo alt="logo" src="/logo.svg" />
               </Link>
             </Grid>
-            <HeaderLinkContainer item>
-              <HeaderLink href="https://zotregistry.dev" target="_blank" rel="noreferrer">
-                Product
-              </HeaderLink>
-            </HeaderLinkContainer>
-            <HeaderLinkContainer item>
-              <HeaderLink href="https://zotregistry.dev/v2.0.0/general/concepts/" target="_blank" rel="noreferrer">
-                Docs
-              </HeaderLink>
-            </HeaderLinkContainer>
           </GridItem>
           <GridItem item xs={6} md={4}>
             {path !== '/' && <SearchSuggestion setSearchCurrentValue={setSearchCurrentValue} />}
           </GridItem>
           <GridItem item container xs={2} md={3} spacing="1.5rem">
-            <HeaderLinkContainer item>
-              <HeaderLink href="https://github.com/project-zot/zot" target="_blank" rel="noreferrer">
-                <Logo alt="github repository" src={githubLogo} />
-              </HeaderLink>
-            </HeaderLinkContainer>
             {isAuthenticated() && isAuthenticationEnabled() && (
               <Grid item>
                 <UserAccountMenu />

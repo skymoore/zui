@@ -5,6 +5,7 @@ import React from 'react';
 
 import { Container, Grid, Stack } from '@mui/material';
 import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
 import RepoDetails from 'components/Repo/RepoDetails';
 import ExploreHeader from 'components/Header/ExploreHeader';
 
@@ -45,6 +46,7 @@ function RepoPage() {
           </Grid>
         </Grid>
       </Container>
+      <Footer/>
     </Stack>
   );
 }
