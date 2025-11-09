@@ -251,7 +251,7 @@ function RepoCard(props) {
           }}
         >
           <Grid container>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={10} sx={{ minWidth: 0 }}>
               <Stack alignItems="center" direction="row" spacing={2}>
                 <CardMedia
                   component="img"
@@ -305,17 +305,15 @@ function RepoCard(props) {
               <Stack alignItems="center" direction="row" spacing={1} pt={1}>
                 {platformChips()}
               </Stack>
-              <Stack alignItems="center" direction="row" spacing={1} pt={'0.5rem'}>
+              <Stack alignItems="center" direction="row" spacing={1} pt={'0.5rem'} sx={{ flexWrap: 'wrap' }}>
                 <Tooltip title={getVendor()} placement="top" className="hide-on-mobile">
                   <Typography
                     variant="body2"
-                    noWrap
                     sx={(theme) => ({
                       color: theme.palette.primary.main,
                       fontSize: '0.75rem',
-                      maxWidth: '50%',
-                      textOverflow: 'ellipsis',
-                      lineHeight: '1.125rem'
+                      lineHeight: '1.125rem',
+                      whiteSpace: 'nowrap'
                     })}
                   >
                     {<Markdown options={{ forceInline: true }}>{getVendor()}</Markdown>}
@@ -324,12 +322,11 @@ function RepoCard(props) {
                 <Tooltip title={getVersion()} placement="top" className="hide-on-mobile">
                   <Typography
                     variant="body2"
-                    noWrap
                     sx={(theme) => ({
                       color: theme.palette.secondary.dark,
                       fontSize: '0.75rem',
                       lineHeight: '1.125rem',
-                      textOverflow: 'ellipsis'
+                      whiteSpace: 'nowrap'
                     })}
                   >
                     {getVersion()}
@@ -338,12 +335,11 @@ function RepoCard(props) {
                 <Tooltip title={lastUpdated?.slice(0, 16) || ' '} placement="top">
                   <Typography
                     variant="body2"
-                    noWrap
                     sx={(theme) => ({
                       color: theme.palette.secondary.dark,
                       fontSize: '0.75rem',
                       lineHeight: '1.125rem',
-                      textOverflow: 'ellipsis'
+                      whiteSpace: 'nowrap'
                     })}
                   >
                     {getLast()}
@@ -370,7 +366,8 @@ function RepoCard(props) {
                     fontSize: '0.75rem',
                     lineHeight: '1.125rem',
                     color: '#52637A',
-                    textAlign: 'end'
+                    textAlign: 'end',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   Downloads •
@@ -384,7 +381,8 @@ function RepoCard(props) {
                     fontWeight: '600',
                     color: '#14191F',
                     textAlign: 'end',
-                    marginLeft: '0.5rem'
+                    marginLeft: '0.5rem',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   {!isNaN(downloads) ? downloads : `not available`}

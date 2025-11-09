@@ -88,21 +88,26 @@ export default function TagCard(props) {
           </Typography>
           {isDeletable && <DeleteTag repo={repo} tag={tag} onTagDelete={onTagDelete} />}
         </Stack>
-        <Typography
-          variant="body1"
-          align="left"
-          sx={{
-            color: '#1479FF',
-            fontSize: '1rem',
-            marginBottom: '0.5rem',
-            textDecorationLine: 'underline',
-            cursor: 'pointer'
-          }}
-          onClick={() => goToTags()}
-        >
-          {repoName && `${repoName}:`}
-          {tag}
-        </Typography>
+        <Tooltip title={repoName ? `${repoName}:${tag}` : tag} placement="top">
+          <Typography
+            variant="body1"
+            align="left"
+            noWrap
+            sx={{
+              color: '#1479FF',
+              fontSize: '1rem',
+              marginBottom: '0.5rem',
+              textDecorationLine: 'underline',
+              cursor: 'pointer',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden'
+            }}
+            onClick={() => goToTags()}
+          >
+            {repoName && `${repoName}:`}
+            {tag}
+          </Typography>
+        </Tooltip>
 
         <Stack sx={{ display: 'inline' }} direction="row" spacing={0.5}>
           <Typography variant="caption" sx={{ fontWeight: '400', fontSize: '0.8125rem' }}>

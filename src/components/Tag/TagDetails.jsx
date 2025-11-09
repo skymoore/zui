@@ -217,10 +217,12 @@ function TagDetails() {
                             fontWeight: '600',
                             fontSize: '1.5rem',
                             color: theme.palette.secondary.main,
-                            textAlign: 'left'
+                            textAlign: 'left',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word'
                           })}
                         >
-                          <span className="hide-on-mobile">{reponame}</span>:{tag}
+                          {reponame}:{tag}
                         </Typography>
                       </Stack>
 
