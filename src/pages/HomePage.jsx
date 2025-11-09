@@ -7,14 +7,14 @@ import Home from 'components/Home/Home.jsx';
 
 function HomePage() {
   return (
-    <Stack sx={{ height: '100%' }} direction="column" data-testid="homepage-container">
+    <Stack sx={{ height: '100%', minHeight: '100vh' }} direction="column" data-testid="homepage-container">
       <Header />
       <Container
         maxWidth="lg"
         sx={{
-          paddingTop: 30,
+          paddingTop: 10,
           paddingBottom: 5,
-          height: '100%'
+          flex: 1
         }}
       >
         <Grid container sx={{ border: '0.0625em #f2f2f2 dashed' }}>

@@ -13,7 +13,7 @@ function TagPage() {
     <Stack
       direction="column"
       sx={{
-        height: '100%',
+        minHeight: '100vh',
         display: 'flex',
         flexFlow: 'column'
       }}
@@ -26,7 +26,7 @@ function TagPage() {
           paddingBottom: 5,
           display: 'flex',
           flexFlow: 'column',
-          height: '100%'
+          flex: 1
         }}
       >
         <ExploreHeader />

@@ -19,13 +19,13 @@ function UserManagementPage() {
   }, []);
 
   return (
-    <Stack sx={{ height: '100%' }} direction="column" data-testid="explore-container">
+    <Stack sx={{ height: '100%', minHeight: '100vh' }} direction="column" data-testid="explore-container">
       <Header />
       <Container
         sx={{
           paddingTop: 30,
           paddingBottom: 5,
-          height: '100%',
+          flex: 1,
           minWidth: '60%'
         }}
       >

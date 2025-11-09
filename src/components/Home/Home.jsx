@@ -24,15 +24,11 @@ const GridWrapper = styled(Stack)({
 
 const SectionHeaderContainer = styled(Stack)(({ theme }) => ({
   justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  flexDirection: 'column',
+  alignItems: 'flex-end',
+  flexDirection: 'row',
   width: '100%',
   paddingTop: '1rem',
-  marginBottom: '1rem',
-  [theme.breakpoints.up('md')]: {
-    alignItems: 'flex-end',
-    flexDirection: 'row'
-  }
+  marginBottom: '1rem'
 }));
 
 const SectionTitle = styled(Typography)({
